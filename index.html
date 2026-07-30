@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stats Captain - CTDT Full Database Comparison</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-color: #0b0f19;
+      --card-bg: #151c2c;
+      --accent-color: #ff2a5f;
+      --secondary-color: #00d2ff;
+      --text-color: #ffffff;
+      --text-muted: #8c9ba5;
+      --better-color: #00ff87;
+      --border-color: #232d42;
+      --gold-color: #ffd700;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+    body { background-color: var(--bg-color); color: var(--text-color); padding: 20px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+
+    header { text-align: center; margin-bottom: 20px; }
+    header h1 { font-size: 2.5rem; font-weight: 900; }
+    header h1 span { color: var(--accent-color); }
+
+    .control-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 15px;
+      width: 100%;
+      max-width: 1000px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .search-box, .momentum-box { display: flex; align-items: center; gap: 8px; }
+    input[type="text"], input[type="number"] {
+      background: #0b0f19; border: 1px solid var(--border-color); color: #fff;
+      padding: 8px 12px; border-radius: 6px; font-size: 0.95rem; outline: none;
+    }
+
+    .comparison-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; width: 100%; max-width: 1000px; }
+    .player-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; flex: 1; min-width: 320px; }
+
+    select { width: 100%; padding: 12px; background-color: #0b0f19; color: #fff; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; margin-bottom: 15px; }
+
+    .player-header { text-align: center; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); margin-bottom: 15px; }
+    .player-name { font-size: 1.2rem; font-weight: 700; color: var(--secondary-color); }
+    .player-tags { display: flex; justify-content: center; gap: 8px; margin-top: 8px; }
+    .tag { padding: 3px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+    .tag-fw { background: #e74c3c; } .tag-am { background: #f39c12; }
+    .tag-dm { background: #27ae60; } .tag-df { background: #2980b9; } .tag-gk { background: #8e44ad; }
+
+    .passive-box { background: rgba(255, 215, 0, 0.08); border: 1px dashed var(--gold-color); border-radius: 8px; padding: 10px; margin-bottom: 15px; font-size: 0.85rem; color: #ffe875; }
+    .stat-row { display: flex; justify-content: space-between; padding: 6px 10px; background: rgba(255, 255, 255, 0.02); border-radius: 6px; margin-bottom: 4px; }
+    .stat-value.better { color: var(--better-color); font-weight: bold; }
+    .skill-force { color: var(--accent-color); font-size: 0.85rem; margin-right: 5px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>STATS <span>CAPTAIN</span></h1>
+    <p>موسوعة ومقارنة كافة لاعبي Captain Tsubasa: Dream Team</p>
+  </header>
+
+  <div class="control-panel">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="searchInput" placeholder="تصفية بالاسم..." oninput="filterPlayers()">
+    </div>
+    <div class="momentum-box">
+      <label><i class="fa-solid fa-bolt"></i> Skill Momentum:</label>
+      <input type="number" id="skillMomentum" value="450" min="1" max="600" oninput="renderComparison()">
+    </div>
+  </div>
+
+  <main class="comparison-container">
+    <div class="player-card">
+      <select id="p1Select" onchange="renderComparison()"></select>
+      <div id="p1Content"></div>
+    </div>
+    <div class="player-card">
+      <select id="p2Select" onchange="renderComparison()"></select>
+      <div id="p2Content"></div>
+    </div>
+  </main>
+
+  <script>
+    let database = [];
+
+    // تحميل قاعدة البيانات الخارجيّة تلقائياً
+    async function loadDatabase() {
+      try {
+        const response = await fetch('players.json');
+        database = await response.json();
+      } catch (e) {
+        // إذا لم يجد ملف JSON يستخدم القائمة الاحتياطية
+        database = getFallbackData();
+      }
+      populateSelects();
+    }
+
+    function populateSelects(filteredList = null) {
+      const p1Sel = document.getElementById('p1Select');
+      const p2Sel = document.getElementById('p2Select');
+      
+      const list = filteredList || database;
+
+      p1Sel.innerHTML = '';
+      p2Sel.innerHTML = '';
+
+      list.forEach((player) => {
+        p1Sel.options.add(new Option(`${player.name} (${player.version || ''})`, player.id));
+        p2Sel.options.add(new Option(`${player.name} (${player.version || ''})`, player.id));
+      });
+
+      if(list.length > 1) p2Sel.selectedIndex = 1;
+      renderComparison();
+    }
+
+    function filterPlayers() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = database.filter(p => p.name.toLowerCase().includes(query) || (p.version && p.version.toLowerCase().includes(query)));
+      populateSelects(filtered);
+    }
+
+    function renderComparison() {
+      const p1Id = document.getElementById('p1Select').value;
+      const p2Id = document.getElementById('p2Select').value;
+      const momentum = parseFloat(document.getElementById('skillMomentum').value) || 0;
+
+      const p1 = database.find(p => p.id == p1Id) || database[0];
+      const p2 = database.find(p => p.id == p2Id) || database[1];
+
+      if(p1 && p2) {
+        document.getElementById('p1Content').innerHTML = generatePlayerHTML(p1, p2, momentum);
+        document.getElementById('p2Content').innerHTML = generatePlayerHTML(p2, p1, momentum);
+      }
+    }
+
+    function generatePlayerHTML(player, opponent, momentum) {
+      let totalStats = Object.values(player.stats).reduce((a, b) => a + b, 0);
+      let html = `
+        <div class="player-header">
+          <div class="player-name">${player.name}</div>
+          <div style="font-size: 0.85rem; color: var(--text-muted)">${player.version || ''}</div>
+          <div class="player-tags">
+            <span class="tag tag-${player.position.toLowerCase()}">${player.position}</span>
+            <span class="tag" style="background: #334155">${player.element}</span>
+            <span class="tag" style="background: #1e293b; color: var(--gold-color)">Total: ${totalStats.toLocaleString()}</span>
+          </div>
+        </div>
+        <div class="passive-box"><strong>Passive:</strong> ${player.passive}</div>
+      `;
+
+      const statsList = ['dribble', 'shot', 'pass', 'tackle', 'block', 'intercept', 'catch', 'punch', 'speed', 'power', 'technique'];
+      statsList.forEach(stat => {
+        if (player.stats[stat] !== undefined) {
+          const val1 = player.stats[stat];
+          const val2 = opponent.stats[stat] || 0;
+          const isBetter = val1 > val2;
+          const skillPower = Math.round(val1 * (momentum / 100));
+
+          html += `
+            <div class="stat-row">
+              <span>${stat.toUpperCase()}</span>
+              <div>
+                <span class="skill-force">(${skillPower.toLocaleString()})</span>
+                <span class="stat-value ${isBetter ? 'better' : ''}">${val1.toLocaleString()}</span>
+              </div>
+            </div>`;
+        }
+      });
+      return html;
+    }
+
+    function getFallbackData() {
+      return [
+        { id: 1, name: "Tsubasa Ozora", version: "SDF 2024", position: "AM", element: "S", passive: "Master Lane +20%", stats: { dribble: 15400, shot: 16800, pass: 15900, tackle: 12500, block: 9200, intercept: 13100, speed: 13800, power: 14500, technique: 15000 } },
+        { id: 2, name: "Kojiro Hyuga", version: "ND World Challenge", position: "FW", element: "T", passive: "Penalty Area Master +25%", stats: { dribble: 13200, shot: 17900, pass: 9500, tackle: 10100, block: 8000, intercept: 8800, speed: 12900, power: 16200, technique: 12100 } }
+      ];
+    }
+
+    window.onload = loadDatabase;
+  </script>
+</body>
+</html>
