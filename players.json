@@ -1,0 +1,29 @@
+[
+  {
+    "id": 101,
+    "name": "Tsubasa Ozora",
+    "version": "Next Dream / Barcelona",
+    "position": "AM",
+    "element": "S",
+    "passive": "Full Power Gauge Autoload +15%",
+    "stats": { "dribble": 14200, "shot": 15800, "pass": 15100, "tackle": 11000, "block": 8500, "intercept": 12000, "speed": 13000, "power": 13500, "technique": 14000 }
+  },
+  {
+    "id": 102,
+    "name": "Genzo Wakabayashi",
+    "version": "Super Dream Festival",
+    "position": "GK",
+    "element": "S",
+    "passive": "Safety Zone +30%",
+    "stats": { "catch": 17800, "punch": 13000, "speed": 9500, "power": 16800, "technique": 15900 }
+  },
+  {
+    "id": 103,
+    "name": "Rivaul",
+    "version": "Catalonia's Pride",
+    "position": "FW",
+    "element": "A",
+    "passive": "Stats Up vs FW/AM +15%",
+    "stats": { "dribble": 14900, "shot": 16100, "pass": 14500, "tackle": 11800, "block": 9000, "intercept": 11500, "speed": 13500, "power": 14200, "technique": 13900 }
+  }
+]
