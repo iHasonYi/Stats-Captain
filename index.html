@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STATS CAPTAIN - موسوعة إحصائيات اللاعبين</title>
+    <title>STATS CAPTAIN - الموسوعة الشاملة</title>
     
-    <!-- CSS Tweak & Styling -->
     <style>
         :root {
             --bg-color: #0f172a;
@@ -71,6 +70,7 @@
             border: 1px solid #334155;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
             transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
         }
 
         .card:hover {
@@ -121,22 +121,58 @@
             margin-bottom: 12px;
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            font-size: 0.85rem;
-            background-color: #0f172a;
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 10px;
-        }
-
         .skill-title {
             font-size: 0.85rem;
             color: #38bdf8;
             margin-top: 8px;
             font-weight: bold;
+        }
+
+        /* نافذة المهارات والتفاصيل (Modal) */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 15px;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border: 1px solid var(--accent-color);
+            border-radius: 12px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px; left: 15px;
+            font-size: 1.8rem;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .skill-list {
+            list-style: none;
+            padding: 0;
+            margin: 5px 0;
+        }
+
+        .skill-list li {
+            background: #0f172a;
+            margin: 4px 0;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
         }
 
         .error-message {
@@ -166,23 +202,27 @@
     </div>
 
     <!-- شبكة عرض البطاقات -->
-    <div class="grid-container" id="playersGrid">
-        <!-- سيتم تحميل البيانات هنا ديناميكياً -->
+    <div class="grid-container" id="playersGrid"></div>
+
+    <!-- النافذة المنبثقة للتفاصيل والمهارات -->
+    <div id="playerModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeModalDirect()">&times;</span>
+            <div id="modalDetails"></div>
+        </div>
     </div>
 
-    <!-- JavaScript لجلب البيانات والتحكم في الصفحة -->
     <script>
         let allPlayers = [];
 
-        // دالة جلب البيانات من ملف players.json باستخدام المسار النسبي المضمون
+        // جلب البيانات بمسار نسبي ممتاز مع السيرفرات
         async function fetchPlayers() {
             const grid = document.getElementById('playersGrid');
             try {
-                // استخدمنا المسار النسبي الصحيح لـ GitHub Pages
                 const response = await fetch('./players.json');
                 
                 if (!response.ok) {
-                    throw new Error(`تعذر التحميل! حالة الاستجابة: ${response.status}`);
+                    throw new Error(`حالة الاستجابة: ${response.status}`);
                 }
                 
                 allPlayers = await response.json();
@@ -192,25 +232,25 @@
                 console.error("خطأ أثناء قراءة الملف:", error);
                 grid.innerHTML = `
                     <div class="error-message">
-                        ⚠️ تعذر تحميل البيانات من ملف <b>players.json</b>.<br>
-                        تأكد أن الملف موجود في نفس مجلد ملف HTML ومرفوع على GitHub بنجاح.
+                        ⚠️ تعذر تحميل البيانات من ملف <b>players.json</b>.
                     </div>`;
             }
         }
 
-        // دالة عرض اللاعبين في الصفحة
+        // عرض قائمة اللاعبين
         function renderPlayers(players) {
             const grid = document.getElementById('playersGrid');
             grid.innerHTML = '';
 
             if (players.length === 0) {
-                grid.innerHTML = '<div class="error-message">لم يتم العثور على أي لاعبين مطبق عليهم البحث.</div>';
+                grid.innerHTML = '<div class="error-message">لم يتم العثور على أي نتائج.</div>';
                 return;
             }
 
             players.forEach(player => {
                 const card = document.createElement('div');
                 card.className = 'card';
+                card.onclick = () => openPlayerDetails(player);
 
                 card.innerHTML = `
                     <div class="card-img-container">
@@ -220,23 +260,80 @@
                     <div class="card-content">
                         <h3 class="card-title">${player.name}</h3>
                         <div class="card-subtitle">${player.title} | ${player.team}</div>
-                        
-                        <div class="stats-grid">
-                            <div>المركز: <b>${player.position}</b></div>
-                            <div>الخاصية: <b>${player.attribute}</b></div>
-                            <div>التحمل: <b>${player.stamina || 'N/A'}</b></div>
-                            <div>الجنسية: <b>${player.nationality}</b></div>
-                        </div>
-
                         <div class="skill-title">المهارة الأساسية:</div>
-                        <div style="font-size:0.85rem; color:#e2e8f0;">${player.main_skill}</div>
+                        <div style="font-size:0.85rem; color:#38bdf8;">${player.main_skill}</div>
+                        <div style="margin-top:12px; font-size:0.75rem; color:var(--accent-color); font-weight:bold;">
+                            اضغط لرؤية كافة المهارات 🔍
+                        </div>
                     </div>
                 `;
                 grid.appendChild(card);
             });
         }
 
-        // أداء الفلترة والبحث
+        // فتح النافذة عند الضغط على لاعب
+        function openPlayerDetails(player) {
+            const modalDetails = document.getElementById('modalDetails');
+            
+            // تجميع المهارات الفرعية
+            const subSkillsList = player.sub_skills && player.sub_skills.length > 0 
+                ? player.sub_skills.map(s => `<li>⚽ ${s}</li>`).join('') 
+                : '<li>لا توجد مهارات فرعية</li>';
+
+            // تجميع القدرات الخفية
+            const hiddenAbilitiesList = player.hidden_abilities && player.hidden_abilities.length > 0 
+                ? player.hidden_abilities.map(h => `<li>✨ ${h}</li>`).join('') 
+                : '<li>لا توجد قدرات خفية</li>';
+
+            modalDetails.innerHTML = `
+                <h2 style="color:var(--accent-color); margin-top:0; margin-bottom:5px;">${player.name}</h2>
+                <div style="color:var(--subtext-color); margin-bottom:15px; font-size:0.9rem;">${player.title}</div>
+                
+                <div style="background:#0f172a; padding:12px; border-radius:8px; margin-bottom:15px; font-size:0.85rem; display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                    <div>المركز: <b>${player.position}</b></div>
+                    <div>الخاصية: <b>${player.attribute}</b></div>
+                    <div>الفريق: <b>${player.team}</b></div>
+                    <div>الجنسية: <b>${player.nationality}</b></div>
+                    <div>التحمل: <b>${player.stamina || 'N/A'}</b></div>
+                    <div>المعكوس (ID): <b>${player.unit_id || 'N/A'}</b></div>
+                </div>
+
+                <div class="skill-title">المهارة القيادية (Team Skill):</div>
+                <div style="font-size:0.85rem; background:#0f172a; padding:6px 10px; border-radius:6px; margin-top:3px;">
+                    ${player.team_skill || 'لا يوجد'}
+                </div>
+
+                <div class="skill-title">القدرة المنفعلة (Passive Skill):</div>
+                <div style="font-size:0.85rem; background:#0f172a; padding:6px 10px; border-radius:6px; margin-top:3px;">
+                    ${player.passive_skill || 'لا يوجد'}
+                </div>
+
+                <div class="skill-title">المهارة الأساسية (Main Skill):</div>
+                <ul class="skill-list">
+                    <li style="border-right:3px solid var(--accent-color);">🔥 ${player.main_skill}</li>
+                </ul>
+
+                <div class="skill-title">المهارات الفرعية (Sub Skills):</div>
+                <ul class="skill-list">${subSkillsList}</ul>
+
+                <div class="skill-title">القدرات الخفية (Hidden Abilities):</div>
+                <ul class="skill-list">${hiddenAbilitiesList}</ul>
+            `;
+
+            document.getElementById('playerModal').style.display = 'flex';
+        }
+
+        function closeModal(event) {
+            if (event.target.id === 'playerModal') {
+                document.getElementById('playerModal').style.display = 'none';
+            }
+        }
+
+        function closeModalDirect() {
+            document.getElementById('playerModal').style.display = 'none';
+        }
+
+        // إعداد البحث والفلترة
         function filterPlayers() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const selectedAttr = document.getElementById('attributeFilter').value;
@@ -252,11 +349,10 @@
             renderPlayers(filtered);
         }
 
-        // إعداد مستمعي الأحداث للبحث
         document.getElementById('searchInput').addEventListener('input', filterPlayers);
         document.getElementById('attributeFilter').addEventListener('change', filterPlayers);
 
-        // تشغيل التحميل بمجرد اكتمال بناء الصفحة
+        // بدء التشغيل
         document.addEventListener('DOMContentLoaded', fetchPlayers);
     </script>
 </body>
