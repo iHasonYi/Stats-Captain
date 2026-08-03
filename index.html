@@ -3,84 +3,120 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stats Captain - CTDT Full Database Comparison</title>
+  <title>Stats Captain - CTDT Ultimate Database</title>
 
+  <!-- Google Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     :root {
-      --bg-color: #0b0f19;
-      --card-bg: #151c2c;
+      --bg-color: #080c14;
+      --card-bg: #111827;
       --accent-color: #ff2a5f;
       --secondary-color: #00d2ff;
       --text-color: #ffffff;
-      --text-muted: #8c9ba5;
+      --text-muted: #94a3b8;
       --better-color: #00ff87;
-      --border-color: #232d42;
-      --gold-color: #ffd700;
+      --border-color: #1e293b;
+      --gold-color: #fbbf24;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
-    body { background-color: var(--bg-color); color: var(--text-color); padding: 20px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+    body { background-color: var(--bg-color); color: var(--text-color); padding: 15px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
 
     header { text-align: center; margin-bottom: 20px; }
-    header h1 { font-size: 2.5rem; font-weight: 900; }
+    header h1 { font-size: 2.2rem; font-weight: 900; letter-spacing: 1px; }
     header h1 span { color: var(--accent-color); }
+    header p { color: var(--text-muted); font-size: 0.95rem; margin-top: 4px; }
 
     .control-panel {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 15px;
       width: 100%;
-      max-width: 1000px;
+      max-width: 950px;
       margin-bottom: 20px;
       display: flex;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 12px;
       justify-content: space-between;
       align-items: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     }
 
-    .search-box, .momentum-box { display: flex; align-items: center; gap: 8px; }
+    .search-box, .momentum-box { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 220px; }
     input[type="text"], input[type="number"] {
-      background: #0b0f19; border: 1px solid var(--border-color); color: #fff;
-      padding: 8px 12px; border-radius: 6px; font-size: 0.95rem; outline: none;
+      background: #090d16; border: 1px solid var(--border-color); color: #fff;
+      padding: 10px 14px; border-radius: 8px; font-size: 0.95rem; outline: none; width: 100%;
     }
 
-    .comparison-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; width: 100%; max-width: 1000px; }
-    .player-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; flex: 1; min-width: 320px; }
+    .comparison-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; width: 100%; max-width: 950px; }
+    .player-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 18px; flex: 1; min-width: 310px; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
 
-    select { width: 100%; padding: 12px; background-color: #0b0f19; color: #fff; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; margin-bottom: 15px; }
+    select {
+      width: 100%; padding: 12px; background-color: #090d16; color: #fff;
+      border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.95rem; margin-bottom: 15px; outline: none; cursor: pointer;
+    }
 
-    .player-header { text-align: center; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); margin-bottom: 15px; }
-    .player-name { font-size: 1.2rem; font-weight: 700; color: var(--secondary-color); }
-    .player-tags { display: flex; justify-content: center; gap: 8px; margin-top: 8px; }
-    .tag { padding: 3px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
-    .tag-fw { background: #e74c3c; } .tag-am { background: #f39c12; }
-    .tag-dm { background: #27ae60; } .tag-df { background: #2980b9; } .tag-gk { background: #8e44ad; }
+    /* تصميم صورة اللاعب */
+    .player-image-container {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .player-avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--secondary-color);
+      box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+      background-color: #090d16;
+    }
 
-    .passive-box { background: rgba(255, 215, 0, 0.08); border: 1px dashed var(--gold-color); border-radius: 8px; padding: 10px; margin-bottom: 15px; font-size: 0.85rem; color: #ffe875; }
-    .stat-row { display: flex; justify-content: space-between; padding: 6px 10px; background: rgba(255, 255, 255, 0.02); border-radius: 6px; margin-bottom: 4px; }
-    .stat-value.better { color: var(--better-color); font-weight: bold; }
-    .skill-force { color: var(--accent-color); font-size: 0.85rem; margin-right: 5px; }
+    .player-header { text-align: center; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); margin-bottom: 12px; }
+    .player-name { font-size: 1.25rem; font-weight: 700; color: var(--secondary-color); }
+    .player-version { font-size: 0.85rem; color: var(--text-muted); margin-top: 2px; }
+    
+    .player-tags { display: flex; justify-content: center; gap: 6px; margin-top: 8px; }
+    .tag { padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+    .tag-fw { background: #ef4444; } .tag-am { background: #f59e0b; }
+    .tag-dm { background: #10b981; } .tag-df { background: #3b82f6; } .tag-gk { background: #8b5cf6; }
+    .tag-elem-s { background: #dc2626; } .tag-elem-t { background: #2563eb; } .tag-elem-a { background: #16a34a; }
+
+    .passive-box {
+      background: rgba(251, 191, 36, 0.08); border: 1px dashed var(--gold-color);
+      border-radius: 8px; padding: 10px; margin-bottom: 15px; font-size: 0.85rem; color: #fef08a; line-height: 1.4;
+    }
+
+    .stat-group-title { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; margin: 12px 0 6px 0; letter-spacing: 0.5px; }
+
+    .stat-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 7px 10px; background: rgba(255, 255, 255, 0.02); border-radius: 6px; margin-bottom: 4px; font-size: 0.9rem;
+    }
+    .stat-value { font-weight: bold; }
+    .stat-value.better { color: var(--better-color); text-shadow: 0 0 8px rgba(0, 255, 135, 0.4); }
+    .skill-force { color: var(--accent-color); font-size: 0.8rem; margin-left: 6px; font-weight: normal; }
+
+    footer { margin-top: 40px; padding-bottom: 20px; color: var(--text-muted); font-size: 0.8rem; text-align: center; }
   </style>
 </head>
 <body>
 
   <header>
     <h1>STATS <span>CAPTAIN</span></h1>
-    <p>موسوعة ومقارنة كافة لاعبي Captain Tsubasa: Dream Team</p>
+    <p>الموسوعة الشاملة لمقارنة وتفسير إحصائيات CTDT</p>
   </header>
 
   <div class="control-panel">
     <div class="search-box">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" id="searchInput" placeholder="تصفية بالاسم..." oninput="filterPlayers()">
+      <i class="fa-solid fa-magnifying-glass" style="color: var(--secondary-color)"></i>
+      <input type="text" id="searchInput" placeholder="ابحث باسم اللاعب أو النسخة..." oninput="filterPlayers()">
     </div>
     <div class="momentum-box">
-      <label><i class="fa-solid fa-bolt"></i> Skill Momentum:</label>
+      <label style="font-size: 0.85rem; color: var(--text-muted)"><i class="fa-solid fa-bolt" style="color: var(--gold-color)"></i> Skill Momentum:</label>
       <input type="number" id="skillMomentum" value="450" min="1" max="600" oninput="renderComparison()">
     </div>
   </div>
@@ -96,33 +132,72 @@
     </div>
   </main>
 
-  <script>
-    let database = [];
+  <footer>
+    <p>Stats Captain &copy; 2026 - صُمم لمجتمع الكابتن ماجد: دريم تيم</p>
+  </footer>
 
-    // تحميل قاعدة البيانات الخارجيّة تلقائياً
-    async function loadDatabase() {
-      try {
-        const response = await fetch('players.json');
-        database = await response.json();
-      } catch (e) {
-        // إذا لم يجد ملف JSON يستخدم القائمة الاحتياطية
-        database = getFallbackData();
+  <script>
+    // قاعدة البيانات مع إضافة رابط الصورة (image) لكل لاعب
+    const database = [
+      {
+        id: 1, name: "Tsubasa Ozora", version: "SDF / Ultimate Partner", position: "AM", element: "S",
+        image: "https://api.dicebear.com/7.x/bottts/svg?seed=Tsubasa",
+        passive: "Master Lane (+20% Stats inside central lane)",
+        stats: { dribble: 15400, shot: 16800, pass: 15900, tackle: 12500, block: 9200, intercept: 13100, speed: 13800, power: 14500, technique: 15000 }
+      },
+      {
+        id: 2, name: "Kojiro Hyuga", version: "SDF / Invincible Ace", position: "FW", element: "T",
+        image: "https://api.dicebear.com/7.x/bottts/svg?seed=Hyuga",
+        passive: "Penalty Area Master (+25% Stats inside Area)",
+        stats: { dribble: 13200, shot: 17900, pass: 9500, tackle: 10100, block: 8000, intercept: 8800, speed: 12900, power: 16200, technique: 12100 }
+      },
+      {
+        id: 3, name: "Genzo Wakabayashi", version: "SDF / SGGK Guardian", position: "GK", element: "A",
+        image: "https://api.dicebear.com/7.x/bottts/svg?seed=Wakabayashi",
+        passive: "Safety Zone (+30% Catch/Punch outside Area)",
+        stats: { punch: 13500, catch: 17800, speed: 9500, power: 16500, technique: 15800 }
+      },
+      {
+        id: 4, name: "Taro Misaki", version: "Next Dream / Field Artist", position: "AM", element: "T",
+        image: "https://api.dicebear.com/7.x/bottts/svg?seed=Misaki",
+        passive: "Combination (+20% Stats with Tsubasa)",
+        stats: { dribble: 14200, shot: 12100, pass: 16800, tackle: 12800, block: 8900, intercept: 14500, speed: 13100, power: 12200, technique: 15900 }
+      },
+      {
+        id: 5, name: "Karl Heinz Schneider", version: "SDF / German Emperor", position: "FW", element: "S",
+        image: "https://api.dicebear.com/7.x/bottts/svg?seed=Schneider",
+        passive: "Fire Killer (+25% vs Wakabayashi & Japanese GKs)",
+        stats: { dribble: 14800, shot: 17500, pass: 11200, tackle: 10500, block: 7900, intercept: 9800, speed: 14000, power: 15800, technique: 13200 }
+      },
+      {
+        id: 6, name: "Natureza", version: "SDF / Miracle Boy", position: "AM", element: "A",
+        image: "https://api.dicebear.com/7.x/bottts/svg?seed=Natureza",
+        passive: "Full Power Gauge Autoload (+30%)",
+        stats: { dribble: 16100, shot: 16500, pass: 14800, tackle: 11500, block: 8200, intercept: 12400, speed: 15200, power: 13900, technique: 14700 }
       }
-      populateSelects();
+    ];
+
+    function init() {
+      populateSelects(database);
     }
 
-    function populateSelects(filteredList = null) {
+    function populateSelects(list) {
       const p1Sel = document.getElementById('p1Select');
       const p2Sel = document.getElementById('p2Select');
-      
-      const list = filteredList || database;
 
       p1Sel.innerHTML = '';
       p2Sel.innerHTML = '';
 
+      if(list.length === 0) {
+        p1Sel.options.add(new Option('لا يوجد لاعبين', ''));
+        p2Sel.options.add(new Option('لا يوجد لاعبين', ''));
+        return;
+      }
+
       list.forEach((player) => {
-        p1Sel.options.add(new Option(`${player.name} (${player.version || ''})`, player.id));
-        p2Sel.options.add(new Option(`${player.name} (${player.version || ''})`, player.id));
+        const optionText = `${player.name} (${player.version})`;
+        p1Sel.options.add(new Option(optionText, player.id));
+        p2Sel.options.add(new Option(optionText, player.id));
       });
 
       if(list.length > 1) p2Sel.selectedIndex = 1;
@@ -131,7 +206,10 @@
 
     function filterPlayers() {
       const query = document.getElementById('searchInput').value.toLowerCase();
-      const filtered = database.filter(p => p.name.toLowerCase().includes(query) || (p.version && p.version.toLowerCase().includes(query)));
+      const filtered = database.filter(p => 
+        p.name.toLowerCase().includes(query) || 
+        p.version.toLowerCase().includes(query)
+      );
       populateSelects(filtered);
     }
 
@@ -151,20 +229,31 @@
 
     function generatePlayerHTML(player, opponent, momentum) {
       let totalStats = Object.values(player.stats).reduce((a, b) => a + b, 0);
+      let elemClass = `tag-elem-${player.element.toLowerCase()}`;
+      
       let html = `
+        <div class="player-image-container">
+          <img src="${player.image}" alt="${player.name}" class="player-avatar">
+        </div>
         <div class="player-header">
           <div class="player-name">${player.name}</div>
-          <div style="font-size: 0.85rem; color: var(--text-muted)">${player.version || ''}</div>
+          <div class="player-version">${player.version}</div>
           <div class="player-tags">
             <span class="tag tag-${player.position.toLowerCase()}">${player.position}</span>
-            <span class="tag" style="background: #334155">${player.element}</span>
-            <span class="tag" style="background: #1e293b; color: var(--gold-color)">Total: ${totalStats.toLocaleString()}</span>
+            <span class="tag ${elemClass}">${player.element}</span>
+            <span class="tag" style="background: #1e293b; color: var(--gold-color)">إجمالي: ${totalStats.toLocaleString()}</span>
           </div>
         </div>
-        <div class="passive-box"><strong>Passive:</strong> ${player.passive}</div>
+        
+        <div class="passive-box">
+          <strong><i class="fa-solid fa-shield-halved"></i> Passive:</strong> ${player.passive}
+        </div>
+        
+        <div class="stat-group-title">المهارات والقدرات</div>
       `;
 
       const statsList = ['dribble', 'shot', 'pass', 'tackle', 'block', 'intercept', 'catch', 'punch', 'speed', 'power', 'technique'];
+      
       statsList.forEach(stat => {
         if (player.stats[stat] !== undefined) {
           const val1 = player.stats[stat];
@@ -174,7 +263,7 @@
 
           html += `
             <div class="stat-row">
-              <span>${stat.toUpperCase()}</span>
+              <span>${translateStat(stat)}</span>
               <div>
                 <span class="skill-force">(${skillPower.toLocaleString()})</span>
                 <span class="stat-value ${isBetter ? 'better' : ''}">${val1.toLocaleString()}</span>
@@ -185,14 +274,17 @@
       return html;
     }
 
-    function getFallbackData() {
-      return [
-        { id: 1, name: "Tsubasa Ozora", version: "SDF 2024", position: "AM", element: "S", passive: "Master Lane +20%", stats: { dribble: 15400, shot: 16800, pass: 15900, tackle: 12500, block: 9200, intercept: 13100, speed: 13800, power: 14500, technique: 15000 } },
-        { id: 2, name: "Kojiro Hyuga", version: "ND World Challenge", position: "FW", element: "T", passive: "Penalty Area Master +25%", stats: { dribble: 13200, shot: 17900, pass: 9500, tackle: 10100, block: 8000, intercept: 8800, speed: 12900, power: 16200, technique: 12100 } }
-      ];
+    function translateStat(stat) {
+      const dict = {
+        dribble: 'المراوغة (Dribble)', shot: 'التسديد (Shot)', pass: 'التمرير (Pass)',
+        tackle: 'القطع (Tackle)', block: 'الصد (Block)', intercept: 'الاعتراض (Intercept)',
+        catch: 'الإمساك (Catch)', punch: 'الكلير (Punch)', speed: 'السرعة (Speed)',
+        power: 'القوة (Power)', technique: 'التكنيك (Technique)'
+      };
+      return dict[stat] || stat;
     }
 
-    window.onload = loadDatabase;
+    window.onload = init;
   </script>
 </body>
 </html>
