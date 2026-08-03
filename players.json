@@ -1,29 +1,762 @@
 [
   {
-    "id": 101,
-    "name": "Tsubasa Ozora",
-    "version": "Next Dream / Barcelona",
+    "id": 1,
+    "name": "Latest",
+    "version": "CTDT Version",
     "position": "AM",
-    "element": "S",
-    "passive": "Full Power Gauge Autoload +15%",
-    "stats": { "dribble": 14200, "shot": 15800, "pass": 15100, "tackle": 11000, "block": 8500, "intercept": 12000, "speed": 13000, "power": 13500, "technique": 14000 }
+    "element": "T",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Latest",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15017,
+      "shot": 16523,
+      "pass": 14211,
+      "tackle": 12009,
+      "block": 9505,
+      "intercept": 12813,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
   },
   {
-    "id": 102,
-    "name": "Genzo Wakabayashi",
-    "version": "Super Dream Festival",
-    "position": "GK",
-    "element": "S",
-    "passive": "Safety Zone +30%",
-    "stats": { "catch": 17800, "punch": 13000, "speed": 9500, "power": 16800, "technique": 15900 }
-  },
-  {
-    "id": 103,
-    "name": "Rivaul",
-    "version": "Catalonia's Pride",
+    "id": 2,
+    "name": "Team Skill",
+    "version": "CTDT Version",
     "position": "FW",
     "element": "A",
-    "passive": "Stats Up vs FW/AM +15%",
-    "stats": { "dribble": 14900, "shot": 16100, "pass": 14500, "tackle": 11800, "block": 9000, "intercept": 11500, "speed": 13500, "power": 14200, "technique": 13900 }
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Team Skill",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15034,
+      "shot": 16546,
+      "pass": 14222,
+      "tackle": 12018,
+      "block": 9510,
+      "intercept": 12826,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 3,
+    "name": "Passive Skill",
+    "version": "CTDT Version",
+    "position": "AM",
+    "element": "S",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Passive Skill",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15051,
+      "shot": 16569,
+      "pass": 14233,
+      "tackle": 12027,
+      "block": 9515,
+      "intercept": 12839,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 4,
+    "name": "Hidden Ability Evolution",
+    "version": "CTDT Version",
+    "position": "FW",
+    "element": "T",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Hidden Ability Evolution",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15068,
+      "shot": 16592,
+      "pass": 14244,
+      "tackle": 12036,
+      "block": 9520,
+      "intercept": 12852,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 5,
+    "name": "Bond",
+    "version": "CTDT Version",
+    "position": "AM",
+    "element": "A",
+    "image": "https://a0.tsubasa.im/public/images/ui_skillicon_icon_ptt_skill_ex.png",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15085,
+      "shot": 16615,
+      "pass": 14255,
+      "tackle": 12045,
+      "block": 9525,
+      "intercept": 12865,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 6,
+    "name": "Collections",
+    "version": "CTDT Version",
+    "position": "FW",
+    "element": "S",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Collections",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15102,
+      "shot": 16638,
+      "pass": 14266,
+      "tackle": 12054,
+      "block": 9530,
+      "intercept": 12878,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 7,
+    "name": "Tsubasa Ozora",
+    "version": "CTDT Version",
+    "position": "AM",
+    "element": "T",
+    "image": "https://a0.tsubasa.im/global/en/character/image/131.png",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15119,
+      "shot": 16661,
+      "pass": 14277,
+      "tackle": 12063,
+      "block": 9535,
+      "intercept": 12891,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 8,
+    "name": "Tsubasa Ozora",
+    "version": "CTDT Version",
+    "position": "FW",
+    "element": "A",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Tsubasa Ozora",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15136,
+      "shot": 16684,
+      "pass": 14288,
+      "tackle": 12072,
+      "block": 9540,
+      "intercept": 12904,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 9,
+    "name": "Kojiro Hyuga",
+    "version": "CTDT Version",
+    "position": "AM",
+    "element": "S",
+    "image": "https://a0.tsubasa.im/global/en/character/image/123.png",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15153,
+      "shot": 16707,
+      "pass": 14299,
+      "tackle": 12081,
+      "block": 9545,
+      "intercept": 12917,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 10,
+    "name": "Kojiro Hyuga",
+    "version": "CTDT Version",
+    "position": "FW",
+    "element": "T",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Kojiro Hyuga",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15170,
+      "shot": 16730,
+      "pass": 14310,
+      "tackle": 12090,
+      "block": 9550,
+      "intercept": 12930,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 11,
+    "name": "Taro Misaki",
+    "version": "CTDT Version",
+    "position": "AM",
+    "element": "A",
+    "image": "https://a0.tsubasa.im/global/en/character/image/137.png",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15187,
+      "shot": 16753,
+      "pass": 14321,
+      "tackle": 12099,
+      "block": 9555,
+      "intercept": 12943,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 12,
+    "name": "Taro Misaki",
+    "version": "CTDT Version",
+    "position": "FW",
+    "element": "S",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Taro Misaki",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15204,
+      "shot": 16776,
+      "pass": 14332,
+      "tackle": 12108,
+      "block": 9560,
+      "intercept": 12956,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 13,
+    "name": "Genzo Wakabayashi",
+    "version": "CTDT Version",
+    "position": "AM",
+    "element": "T",
+    "image": "https://a0.tsubasa.im/global/en/character/image/138.png",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15221,
+      "shot": 16799,
+      "pass": 14343,
+      "tackle": 12117,
+      "block": 9565,
+      "intercept": 12969,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 14,
+    "name": "Genzo Wakabayashi",
+    "version": "CTDT Version",
+    "position": "FW",
+    "element": "A",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Genzo Wakabayashi",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15238,
+      "shot": 16822,
+      "pass": 14354,
+      "tackle": 12126,
+      "block": 9570,
+      "intercept": 12982,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 15,
+    "name": "Ryo Ishizaki",
+    "version": "CTDT Version",
+    "position": "AM",
+    "element": "S",
+    "image": "https://a0.tsubasa.im/global/en/character/image/128.png",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15255,
+      "shot": 16845,
+      "pass": 14365,
+      "tackle": 12135,
+      "block": 9575,
+      "intercept": 12995,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 16,
+    "name": "Ryo Ishizaki",
+    "version": "CTDT Version",
+    "position": "FW",
+    "element": "T",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Ryo Ishizaki",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15272,
+      "shot": 16868,
+      "pass": 14376,
+      "tackle": 12144,
+      "block": 9580,
+      "intercept": 13008,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 17,
+    "name": "Jun Misugi",
+    "version": "CTDT Version",
+    "position": "AM",
+    "element": "A",
+    "image": "https://a0.tsubasa.im/global/en/character/image/42.png",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15289,
+      "shot": 16891,
+      "pass": 14387,
+      "tackle": 12153,
+      "block": 9585,
+      "intercept": 13021,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 18,
+    "name": "Jun Misugi",
+    "version": "CTDT Version",
+    "position": "FW",
+    "element": "S",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Jun Misugi",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15306,
+      "shot": 16914,
+      "pass": 14398,
+      "tackle": 12162,
+      "block": 9590,
+      "intercept": 13034,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 19,
+    "name": "Hikaru Matsuyama",
+    "version": "CTDT Version",
+    "position": "AM",
+    "element": "T",
+    "image": "https://a0.tsubasa.im/global/en/character/image/109.png",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15323,
+      "shot": 16937,
+      "pass": 14409,
+      "tackle": 12171,
+      "block": 9595,
+      "intercept": 13047,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 20,
+    "name": "Hikaru Matsuyama",
+    "version": "CTDT Version",
+    "position": "FW",
+    "element": "A",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Hikaru Matsuyama",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15340,
+      "shot": 16960,
+      "pass": 14420,
+      "tackle": 12180,
+      "block": 9600,
+      "intercept": 13060,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 21,
+    "name": "Shun Nitta 日本动漫",
+    "version": "CTDT Version",
+    "position": "AM",
+    "element": "S",
+    "image": "https://a0.tsubasa.im/global/en/character/image/11.png",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15357,
+      "shot": 16983,
+      "pass": 14431,
+      "tackle": 12189,
+      "block": 9605,
+      "intercept": 13073,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 22,
+    "name": "Shun Nitta 日本动漫",
+    "version": "CTDT Version",
+    "position": "FW",
+    "element": "T",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Shun Nitta 日本动漫",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15374,
+      "shot": 17006,
+      "pass": 14442,
+      "tackle": 12198,
+      "block": 9610,
+      "intercept": 13086,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 23,
+    "name": "Makoto Soda",
+    "version": "CTDT Version",
+    "position": "AM",
+    "element": "A",
+    "image": "https://a0.tsubasa.im/global/en/character/image/49.png",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15391,
+      "shot": 17029,
+      "pass": 14453,
+      "tackle": 12207,
+      "block": 9615,
+      "intercept": 13099,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 24,
+    "name": "Makoto Soda",
+    "version": "CTDT Version",
+    "position": "FW",
+    "element": "S",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Makoto Soda",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15408,
+      "shot": 17052,
+      "pass": 14464,
+      "tackle": 12216,
+      "block": 9620,
+      "intercept": 13112,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 25,
+    "name": "Masao Tachibana",
+    "version": "CTDT Version",
+    "position": "AM",
+    "element": "T",
+    "image": "https://a0.tsubasa.im/global/en/character/image/65.png",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15425,
+      "shot": 17075,
+      "pass": 14475,
+      "tackle": 12225,
+      "block": 9625,
+      "intercept": 13125,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 26,
+    "name": "Masao Tachibana",
+    "version": "CTDT Version",
+    "position": "FW",
+    "element": "A",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Masao Tachibana",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15442,
+      "shot": 17098,
+      "pass": 14486,
+      "tackle": 12234,
+      "block": 9630,
+      "intercept": 13138,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 27,
+    "name": "Kazuo Tachibana",
+    "version": "CTDT Version",
+    "position": "AM",
+    "element": "S",
+    "image": "https://a0.tsubasa.im/global/en/character/image/67.png",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15459,
+      "shot": 17121,
+      "pass": 14497,
+      "tackle": 12243,
+      "block": 9635,
+      "intercept": 13151,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 28,
+    "name": "Kazuo Tachibana",
+    "version": "CTDT Version",
+    "position": "FW",
+    "element": "T",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Kazuo Tachibana",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15476,
+      "shot": 17144,
+      "pass": 14508,
+      "tackle": 12252,
+      "block": 9640,
+      "intercept": 13164,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 29,
+    "name": "Hiroshi Jito",
+    "version": "CTDT Version",
+    "position": "AM",
+    "element": "A",
+    "image": "https://a0.tsubasa.im/global/en/character/image/70.png",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15493,
+      "shot": 17167,
+      "pass": 14519,
+      "tackle": 12261,
+      "block": 9645,
+      "intercept": 13177,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 30,
+    "name": "Hiroshi Jito",
+    "version": "CTDT Version",
+    "position": "FW",
+    "element": "S",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Hiroshi Jito",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15510,
+      "shot": 17190,
+      "pass": 14530,
+      "tackle": 12270,
+      "block": 9650,
+      "intercept": 13190,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 31,
+    "name": "Mitsuru Sano",
+    "version": "CTDT Version",
+    "position": "AM",
+    "element": "T",
+    "image": "https://a0.tsubasa.im/global/en/character/image/79.png",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15527,
+      "shot": 17213,
+      "pass": 14541,
+      "tackle": 12279,
+      "block": 9655,
+      "intercept": 13203,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 32,
+    "name": "Mitsuru Sano",
+    "version": "CTDT Version",
+    "position": "FW",
+    "element": "A",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Mitsuru Sano",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15544,
+      "shot": 17236,
+      "pass": 14552,
+      "tackle": 12288,
+      "block": 9660,
+      "intercept": 13216,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 33,
+    "name": "Ken Wakashimazu",
+    "version": "CTDT Version",
+    "position": "AM",
+    "element": "S",
+    "image": "https://a0.tsubasa.im/global/en/character/image/113.png",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15561,
+      "shot": 17259,
+      "pass": 14563,
+      "tackle": 12297,
+      "block": 9665,
+      "intercept": 13229,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 34,
+    "name": "Ken Wakashimazu",
+    "version": "CTDT Version",
+    "position": "FW",
+    "element": "T",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Ken Wakashimazu",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15578,
+      "shot": 17282,
+      "pass": 14574,
+      "tackle": 12306,
+      "block": 9670,
+      "intercept": 13242,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 35,
+    "name": "Takeshi Sawada",
+    "version": "CTDT Version",
+    "position": "AM",
+    "element": "A",
+    "image": "https://a0.tsubasa.im/global/en/character/image/121.png",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15595,
+      "shot": 17305,
+      "pass": 14585,
+      "tackle": 12315,
+      "block": 9675,
+      "intercept": 13255,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 36,
+    "name": "Takeshi Sawada",
+    "version": "CTDT Version",
+    "position": "FW",
+    "element": "S",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Takeshi Sawada",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15612,
+      "shot": 17328,
+      "pass": 14596,
+      "tackle": 12324,
+      "block": 9680,
+      "intercept": 13268,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 37,
+    "name": "Kazuki Sorimachi",
+    "version": "CTDT Version",
+    "position": "AM",
+    "element": "T",
+    "image": "https://a0.tsubasa.im/global/en/character/image/122.png",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15629,
+      "shot": 17351,
+      "pass": 14607,
+      "tackle": 12333,
+      "block": 9685,
+      "intercept": 13281,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
+  },
+  {
+    "id": 38,
+    "name": "Kazuki Sorimachi",
+    "version": "CTDT Version",
+    "position": "FW",
+    "element": "A",
+    "image": "https://api.dicebear.com/7.x/bottts/svg?seed=Kazuki Sorimachi",
+    "passive": "Special Skill Momentum Boost",
+    "stats": {
+      "dribble": 15646,
+      "shot": 17374,
+      "pass": 14618,
+      "tackle": 12342,
+      "block": 9690,
+      "intercept": 13294,
+      "speed": 13500,
+      "power": 14800,
+      "technique": 14100
+    }
   }
 ]
