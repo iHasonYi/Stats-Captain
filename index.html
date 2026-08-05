@@ -1,359 +1,1201 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STATS CAPTAIN - الموسوعة الشاملة</title>
-    
-    <style>
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent-color: #e11d48;
-            --text-color: #f8fafc;
-            --subtext-color: #94a3b8;
-        }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-        }
+<meta charset="UTF-8">
 
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        header h1 {
-            color: var(--accent-color);
-            font-size: 2.5rem;
-            margin-bottom: 5px;
-        }
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
+<title>Tsubasa Go | Ultimate Captain Tsubasa Dream Team Database</title>
 
-        .search-box, .filter-select {
-            padding: 10px 15px;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            background-color: #1e293b;
-            color: #fff;
-            font-size: 1rem;
-            outline: none;
-        }
+<meta name="description"
+content="Tsubasa Go - Complete Captain Tsubasa Dream Team Database, Player Comparison, Team Builder, Analyzer and Guides.">
 
-        .search-box {
-            width: 280px;
-        }
+<meta name="keywords"
+content="Captain Tsubasa Dream Team, CTDT, Tsubasa Go, Database, Team Builder, Player Compare">
 
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+<meta name="author"
+content="Tsubasa Go">
 
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid #334155;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-        }
+<meta name="theme-color"
+content="#0b1220">
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(225, 29, 72, 0.3);
-        }
+<meta name="robots"
+content="index,follow">
 
-        .card-img-container {
-            width: 100%;
-            height: 200px;
-            background-color: #0f172a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
+<link rel="icon"
+href="assets/favicon.ico">
 
-        .card-img-container img {
-            max-height: 100%;
-            max-width: 100%;
-            object-fit: contain;
-        }
+<link rel="manifest"
+href="manifest.json">
 
-        .badge-rarity {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: var(--accent-color);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 0.8rem;
-        }
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
 
-        .card-content {
-            padding: 15px;
-        }
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
 
-        .card-title {
-            font-size: 1.2rem;
-            margin: 0 0 5px 0;
-            color: #fff;
-        }
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
 
-        .card-subtitle {
-            font-size: 0.85rem;
-            color: var(--subtext-color);
-            margin-bottom: 12px;
-        }
+<link
+rel="stylesheet"
+href="css/style.css">
 
-        .skill-title {
-            font-size: 0.85rem;
-            color: #38bdf8;
-            margin-top: 8px;
-            font-weight: bold;
-        }
+<link
+rel="stylesheet"
+href="css/home.css">
 
-        /* نافذة المهارات والتفاصيل (Modal) */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 15px;
-        }
+<link
+rel="stylesheet"
+href="css/responsive.css">
 
-        .modal-content {
-            background-color: var(--card-bg);
-            border: 1px solid var(--accent-color);
-            border-radius: 12px;
-            max-width: 500px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 20px;
-            position: relative;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 10px; left: 15px;
-            font-size: 1.8rem;
-            color: #fff;
-            cursor: pointer;
-        }
-
-        .skill-list {
-            list-style: none;
-            padding: 0;
-            margin: 5px 0;
-        }
-
-        .skill-list li {
-            background: #0f172a;
-            margin: 4px 0;
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-        }
-
-        .error-message {
-            text-align: center;
-            color: var(--accent-color);
-            font-size: 1.2rem;
-            grid-column: 1 / -1;
-            padding: 40px;
-        }
-    </style>
 </head>
+
 <body>
 
-    <header>
-        <h1>STATS CAPTAIN</h1>
-        <p>الموسوعة الشاملة لمقارنة وإحصائيات اللاعبين</p>
-    </header>
+<div id="loadingScreen">
 
-    <div class="controls">
-        <input type="text" id="searchInput" class="search-box" placeholder="ابحث باسم اللاعب أو النادي...">
-        <select id="attributeFilter" class="filter-select">
-            <option value="ALL">جميع الخصائص</option>
-            <option value="STR">STR (قوة)</option>
-            <option value="AGL">AGL (سرعة)</option>
-            <option value="PHY">PHY (بدني)</option>
-        </select>
-    </div>
+<div class="loaderLogo">
 
-    <!-- شبكة عرض البطاقات -->
-    <div class="grid-container" id="playersGrid"></div>
+⚽
 
-    <!-- النافذة المنبثقة للتفاصيل والمهارات -->
-    <div id="playerModal" class="modal-overlay" onclick="closeModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="closeModalDirect()">&times;</span>
-            <div id="modalDetails"></div>
-        </div>
-    </div>
+</div>
 
-    <script>
-        let allPlayers = [];
+<h2>
 
-        // جلب البيانات بمسار نسبي ممتاز مع السيرفرات
-        async function fetchPlayers() {
-            const grid = document.getElementById('playersGrid');
-            try {
-                const response = await fetch('./players.json');
-                
-                if (!response.ok) {
-                    throw new Error(`حالة الاستجابة: ${response.status}`);
-                }
-                
-                allPlayers = await response.json();
-                renderPlayers(allPlayers);
+Tsubasa Go
 
-            } catch (error) {
-                console.error("خطأ أثناء قراءة الملف:", error);
-                grid.innerHTML = `
-                    <div class="error-message">
-                        ⚠️ تعذر تحميل البيانات من ملف <b>players.json</b>.
-                    </div>`;
-            }
-        }
+</h2>
 
-        // عرض قائمة اللاعبين
-        function renderPlayers(players) {
-            const grid = document.getElementById('playersGrid');
-            grid.innerHTML = '';
+<p>
 
-            if (players.length === 0) {
-                grid.innerHTML = '<div class="error-message">لم يتم العثور على أي نتائج.</div>';
-                return;
-            }
+Loading Database...
 
-            players.forEach(player => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.onclick = () => openPlayerDetails(player);
+</p>
 
-                card.innerHTML = `
-                    <div class="card-img-container">
-                        <span class="badge-rarity">${player.rarity}</span>
-                        <img src="${player.image_url}" alt="${player.name}" onerror="this.src='https://via.placeholder.com/200x200?text=No+Image'">
-                    </div>
-                    <div class="card-content">
-                        <h3 class="card-title">${player.name}</h3>
-                        <div class="card-subtitle">${player.title} | ${player.team}</div>
-                        <div class="skill-title">المهارة الأساسية:</div>
-                        <div style="font-size:0.85rem; color:#38bdf8;">${player.main_skill}</div>
-                        <div style="margin-top:12px; font-size:0.75rem; color:var(--accent-color); font-weight:bold;">
-                            اضغط لرؤية كافة المهارات 🔍
-                        </div>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
+<div class="loaderBar">
 
-        // فتح النافذة عند الضغط على لاعب
-        function openPlayerDetails(player) {
-            const modalDetails = document.getElementById('modalDetails');
-            
-            // تجميع المهارات الفرعية
-            const subSkillsList = player.sub_skills && player.sub_skills.length > 0 
-                ? player.sub_skills.map(s => `<li>⚽ ${s}</li>`).join('') 
-                : '<li>لا توجد مهارات فرعية</li>';
+<div class="loaderProgress">
 
-            // تجميع القدرات الخفية
-            const hiddenAbilitiesList = player.hidden_abilities && player.hidden_abilities.length > 0 
-                ? player.hidden_abilities.map(h => `<li>✨ ${h}</li>`).join('') 
-                : '<li>لا توجد قدرات خفية</li>';
+</div>
 
-            modalDetails.innerHTML = `
-                <h2 style="color:var(--accent-color); margin-top:0; margin-bottom:5px;">${player.name}</h2>
-                <div style="color:var(--subtext-color); margin-bottom:15px; font-size:0.9rem;">${player.title}</div>
-                
-                <div style="background:#0f172a; padding:12px; border-radius:8px; margin-bottom:15px; font-size:0.85rem; display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-                    <div>المركز: <b>${player.position}</b></div>
-                    <div>الخاصية: <b>${player.attribute}</b></div>
-                    <div>الفريق: <b>${player.team}</b></div>
-                    <div>الجنسية: <b>${player.nationality}</b></div>
-                    <div>التحمل: <b>${player.stamina || 'N/A'}</b></div>
-                    <div>المعكوس (ID): <b>${player.unit_id || 'N/A'}</b></div>
-                </div>
+</div>
 
-                <div class="skill-title">المهارة القيادية (Team Skill):</div>
-                <div style="font-size:0.85rem; background:#0f172a; padding:6px 10px; border-radius:6px; margin-top:3px;">
-                    ${player.team_skill || 'لا يوجد'}
-                </div>
+</div>
 
-                <div class="skill-title">القدرة المنفعلة (Passive Skill):</div>
-                <div style="font-size:0.85rem; background:#0f172a; padding:6px 10px; border-radius:6px; margin-top:3px;">
-                    ${player.passive_skill || 'لا يوجد'}
-                </div>
+<header class="header">
 
-                <div class="skill-title">المهارة الأساسية (Main Skill):</div>
-                <ul class="skill-list">
-                    <li style="border-right:3px solid var(--accent-color);">🔥 ${player.main_skill}</li>
-                </ul>
+<div class="container">
 
-                <div class="skill-title">المهارات الفرعية (Sub Skills):</div>
-                <ul class="skill-list">${subSkillsList}</ul>
+<a
+href="index.html"
+class="logo">
 
-                <div class="skill-title">القدرات الخفية (Hidden Abilities):</div>
-                <ul class="skill-list">${hiddenAbilitiesList}</ul>
-            `;
+<div class="logoCircle">
 
-            document.getElementById('playerModal').style.display = 'flex';
-        }
+⚽
 
-        function closeModal(event) {
-            if (event.target.id === 'playerModal') {
-                document.getElementById('playerModal').style.display = 'none';
-            }
-        }
+</div>
 
-        function closeModalDirect() {
-            document.getElementById('playerModal').style.display = 'none';
-        }
+<div>
 
-        // إعداد البحث والفلترة
-        function filterPlayers() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const selectedAttr = document.getElementById('attributeFilter').value;
+<h1>
 
-            const filtered = allPlayers.filter(player => {
-                const matchesSearch = player.name.toLowerCase().includes(searchTerm) || 
-                                      player.team.toLowerCase().includes(searchTerm);
-                const matchesAttr = selectedAttr === 'ALL' || player.attribute === selectedAttr;
-                
-                return matchesSearch && matchesAttr;
-            });
+Tsubasa Go
 
-            renderPlayers(filtered);
-        }
+</h1>
 
-        document.getElementById('searchInput').addEventListener('input', filterPlayers);
-        document.getElementById('attributeFilter').addEventListener('change', filterPlayers);
+<span>
 
-        // بدء التشغيل
-        document.addEventListener('DOMContentLoaded', fetchPlayers);
-    </script>
+Ultimate CTDT Database
+
+</span>
+
+</div>
+
+</a>
+
+<nav class="desktopNav">
+
+<ul>
+
+<li>
+
+<a
+class="active"
+href="index.html">
+
+Home
+
+</a>
+
+</li>
+
+<li>
+
+<a
+href="pages/players.html">
+
+Players
+
+</a>
+
+</li>
+
+<li>
+
+<a
+href="pages/compare.html">
+
+Compare
+
+</a>
+
+</li>
+
+<li>
+
+<a
+href="pages/team-builder.html">
+
+Team Builder
+
+</a>
+
+</li>
+
+<li>
+
+<a
+href="pages/analyzer.html">
+
+Analyzer
+
+</a>
+
+</li>
+
+<li>
+
+<a
+href="pages/tier-list.html">
+
+Tier List
+
+</a>
+
+</li>
+
+<li>
+
+<a
+href="pages/news.html">
+
+News
+
+</a>
+
+</li>
+
+</ul>
+
+</nav>
+
+<div class="headerButtons">
+
+<button
+id="themeToggle"
+title="Dark Mode">
+
+🌙
+
+</button>
+
+<button
+id="mobileMenuButton">
+
+☰
+
+</button>
+
+</div>
+
+</div>
+
+</header>
+
+<div
+class="mobileMenu"
+id="mobileMenu">
+
+<a href="index.html">
+
+Home
+
+</a>
+
+<a href="pages/players.html">
+
+Players
+
+</a>
+
+<a href="pages/compare.html">
+
+Compare
+
+</a>
+
+<a href="pages/team-builder.html">
+
+Team Builder
+
+</a>
+
+<a href="pages/analyzer.html">
+
+Analyzer
+
+</a>
+
+<a href="pages/tier-list.html">
+
+Tier List
+
+</a>
+
+<a href="pages/news.html">
+
+News
+
+</a>
+
+</div>
+
+<main>
+
+<section class="hero">
+
+<div class="container heroContainer">
+
+<div class="heroContent">
+
+<span class="heroBadge">
+
+THE ULTIMATE DATABASE
+
+</span>
+
+<h2>
+
+Build Your Dream Team.
+
+Compare Every Player.
+
+Win Every Match.
+
+</h2>
+
+<p>
+
+Tsubasa Go gives you access to every Captain Tsubasa Dream Team player, detailed stats, skills, bonds, comparisons, team building tools and AI powered analysis.
+
+</p>
+
+<div class="heroButtons">
+
+<a
+class="primaryButton"
+href="pages/players.html">
+
+Browse Players
+
+</a>
+
+<a
+class="secondaryButton"
+href="pages/compare.html">
+
+Compare Players
+
+</a>
+
+</div>
+
+<div class="heroSearch">
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search any player...">
+
+<button
+id="searchButton">
+
+🔍
+
+</button>
+
+</div>
+
+</div>
+
+<div class="heroImage">
+
+<img
+src="images/backgrounds/hero.png"
+alt="Captain Tsubasa">
+
+</div>
+
+</div>
+
+</section>
+
+<section class="quickAccess">
+
+<div class="container">
+
+<h2>
+
+Quick Access
+
+</h2>
+
+<div class="quickGrid"><a
+class="quickCard"
+href="pages/players.html">
+
+<div class="quickIcon">
+
+👤
+
+</div>
+
+<h3>
+
+Players Database
+
+</h3>
+
+<p>
+
+Browse every player released in Captain Tsubasa Dream Team.
+
+</p>
+
+</a>
+
+<a
+class="quickCard"
+href="pages/compare.html">
+
+<div class="quickIcon">
+
+⚔️
+
+</div>
+
+<h3>
+
+Compare Players
+
+</h3>
+
+<p>
+
+Compare up to four players side by side.
+
+</p>
+
+</a>
+
+<a
+class="quickCard"
+href="pages/team-builder.html">
+
+<div class="quickIcon">
+
+🏆
+
+</div>
+
+<h3>
+
+Team Builder
+
+</h3>
+
+<p>
+
+Create your ideal formation and save your teams.
+
+</p>
+
+</a>
+
+<a
+class="quickCard"
+href="pages/analyzer.html">
+
+<div class="quickIcon">
+
+🤖
+
+</div>
+
+<h3>
+
+Team Analyzer
+
+</h3>
+
+<p>
+
+Analyze your team and receive improvement suggestions.
+
+</p>
+
+</a>
+
+<a
+class="quickCard"
+href="pages/tier-list.html">
+
+<div class="quickIcon">
+
+⭐
+
+</div>
+
+<h3>
+
+Tier List
+
+</h3>
+
+<p>
+
+Discover the strongest players for every position.
+
+</p>
+
+</a>
+
+<a
+class="quickCard"
+href="pages/news.html">
+
+<div class="quickIcon">
+
+📰
+
+</div>
+
+<h3>
+
+Latest News
+
+</h3>
+
+<p>
+
+Stay updated with banners, events and game updates.
+
+</p>
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="featuredPlayers">
+
+<div class="container">
+
+<div class="sectionHeader">
+
+<h2>
+
+Featured Players
+
+</h2>
+
+<a
+href="pages/players.html">
+
+View All →
+
+</a>
+
+</div>
+
+<div
+class="playerGrid"
+id="featuredPlayers">
+
+<div class="playerCard">
+
+<img
+src="images/players/placeholder.png"
+alt="Natureza">
+
+<h3>
+
+Natureza
+
+</h3>
+
+<span>
+
+AM / FW
+
+</span>
+
+<div class="power">
+
+379945
+
+</div>
+
+</div>
+
+<div class="playerCard">
+
+<img
+src="images/players/placeholder.png"
+alt="Tsubasa">
+
+<h3>
+
+Tsubasa Ozora
+
+</h3>
+
+<span>
+
+AM
+
+</span>
+
+<div class="power">
+
+382110
+
+</div>
+
+</div>
+
+<div class="playerCard">
+
+<img
+src="images/players/placeholder.png"
+alt="Hyuga">
+
+<h3>
+
+Kojiro Hyuga
+
+</h3>
+
+<span>
+
+FW
+
+</span>
+
+<div class="power">
+
+381250
+
+</div>
+
+</div>
+
+<div class="playerCard">
+
+<img
+src="images/players/placeholder.png"
+alt="Schneider">
+
+<h3>
+
+Karl Heinz Schneider
+
+</h3>
+
+<span>
+
+FW
+
+</span>
+
+<div class="power">
+
+380980
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="statistics">
+
+<div class="container">
+
+<h2>
+
+Database Statistics
+
+</h2>
+
+<div class="statsGrid"><div class="statCard">
+
+<h3 id="totalPlayers">
+
+0
+
+</h3>
+
+<p>
+
+Total Players
+
+</p>
+
+</div>
+
+<div class="statCard">
+
+<h3 id="totalSkills">
+
+0
+
+</h3>
+
+<p>
+
+Skills
+
+</p>
+
+</div>
+
+<div class="statCard">
+
+<h3 id="totalTeams">
+
+0
+
+</h3>
+
+<p>
+
+Team Skills
+
+</p>
+
+</div>
+
+<div class="statCard">
+
+<h3 id="totalHidden">
+
+0
+
+</h3>
+
+<p>
+
+Hidden Skills
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="latestNews">
+
+<div class="container">
+
+<div class="sectionHeader">
+
+<h2>
+
+Latest News
+
+</h2>
+
+<a
+href="pages/news.html">
+
+View All →
+
+</a>
+
+</div>
+
+<div class="newsGrid">
+
+<article class="newsCard">
+
+<div class="newsImage">
+
+📰
+
+</div>
+
+<div class="newsContent">
+
+<span class="newsDate">
+
+Coming Soon
+
+</span>
+
+<h3>
+
+Dream Championship Update
+
+</h3>
+
+<p>
+
+Read the newest information about upcoming Dream Championship events and rewards.
+
+</p>
+
+<a href="pages/news.html">
+
+Read More →
+
+</a>
+
+</div>
+
+</article>
+
+<article class="newsCard">
+
+<div class="newsImage">
+
+🎁
+
+</div>
+
+<div class="newsContent">
+
+<span class="newsDate">
+
+Coming Soon
+
+</span>
+
+<h3>
+
+New SSR Players
+
+</h3>
+
+<p>
+
+Check all newly released SSR players with complete statistics and abilities.
+
+</p>
+
+<a href="pages/news.html">
+
+Read More →
+
+</a>
+
+</div>
+
+</article>
+
+<article class="newsCard">
+
+<div class="newsImage">
+
+🔥
+
+</div>
+
+<div class="newsContent">
+
+<span class="newsDate">
+
+Coming Soon
+
+</span>
+
+<h3>
+
+Meta Tier List Updated
+
+</h3>
+
+<p>
+
+See which players dominate the current PvP and Dream Championship meta.
+
+</p>
+
+<a href="pages/tier-list.html">
+
+View Tier List →
+
+</a>
+
+</div>
+
+</article>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="tools">
+
+<div class="container">
+
+<h2>
+
+Powerful Tools
+
+</h2>
+
+<div class="toolsGrid">
+
+<div class="toolCard">
+
+<div class="toolIcon">
+
+📸
+
+</div>
+
+<h3>
+
+OCR Scanner
+
+</h3>
+
+<p>
+
+Import players directly from screenshots.
+
+</p>
+
+</div>
+
+<div class="toolCard">
+
+<div class="toolIcon">
+
+🧮
+
+</div>
+
+<h3>
+
+Bond Calculator
+
+</h3>
+
+<p>
+
+Calculate team bonds instantly.
+
+</p>
+
+</div>
+
+<div class="toolCard">
+
+<div class="toolIcon">
+
+📊
+
+</div>
+
+<h3>
+
+Power Calculator
+
+</h3>
+
+<p>
+
+Estimate team power before entering matches.
+
+</p>
+
+</div>
+
+<div class="toolCard">
+
+<div class="toolIcon">
+
+❤️
+
+</div>
+
+<h3>
+
+Favorites
+
+</h3>
+
+<p>
+
+Save your favorite players and teams.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<footer class="footer">
+
+<div class="container">
+
+<div class="footerGrid"><div class="footerColumn">
+
+<h3>
+
+⚽ Tsubasa Go
+
+</h3>
+
+<p>
+
+The ultimate Captain Tsubasa Dream Team database with powerful tools for every player.
+
+</p>
+
+</div>
+
+<div class="footerColumn">
+
+<h4>
+
+Navigation
+
+</h4>
+
+<ul>
+
+<li>
+
+<a href="index.html">
+
+Home
+
+</a>
+
+</li>
+
+<li>
+
+<a href="pages/players.html">
+
+Players
+
+</a>
+
+</li>
+
+<li>
+
+<a href="pages/compare.html">
+
+Compare
+
+</a>
+
+</li>
+
+<li>
+
+<a href="pages/team-builder.html">
+
+Team Builder
+
+</a>
+
+</li>
+
+<li>
+
+<a href="pages/analyzer.html">
+
+Analyzer
+
+</a>
+
+</li>
+
+</ul>
+
+</div>
+
+<div class="footerColumn">
+
+<h4>
+
+Database
+
+</h4>
+
+<ul>
+
+<li>
+
+<a href="pages/tier-list.html">
+
+Tier List
+
+</a>
+
+</li>
+
+<li>
+
+<a href="pages/news.html">
+
+News
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#">
+
+Skills
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#">
+
+Hidden Skills
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#">
+
+Bonds
+
+</a>
+
+</li>
+
+</ul>
+
+</div>
+
+<div class="footerColumn">
+
+<h4>
+
+Community
+
+</h4>
+
+<p>
+
+Follow future updates of Tsubasa Go and help improve the database by reporting missing players or incorrect information.
+
+</p>
+
+<div class="socialLinks">
+
+<a href="#" aria-label="Discord">
+
+💬
+
+</a>
+
+<a href="#" aria-label="GitHub">
+
+🐙
+
+</a>
+
+<a href="#" aria-label="X">
+
+𝕏
+
+</a>
+
+<a href="#" aria-label="YouTube">
+
+▶️
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="footerBottom">
+
+<p>
+
+© 2026 Tsubasa Go. All rights reserved.
+
+</p>
+
+</div>
+
+</div>
+
+</footer>
+
+<script src="js/theme.js"></script>
+
+<script src="js/search.js"></script>
+
+<script src="js/app.js"></script>
+
 </body>
+
 </html>
